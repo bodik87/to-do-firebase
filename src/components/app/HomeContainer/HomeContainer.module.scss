@@ -1,0 +1,15 @@
+.container {
+  @apply max-w-lg w-full mx-auto;
+}
+.form {
+  @apply flex justify-between gap-2 mb-4;
+}
+.input {
+  @apply bg-white/10 py-4 px-4 w-full outline-none focus:bg-white/20;
+}
+.button {
+  @apply bg-[#6146C1] p-4 text-white hover:brightness-105 transition-all;
+}
+.count {
+  @apply text-center pt-4;
+}

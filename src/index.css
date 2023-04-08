@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply p-2 pb-4 w-full min-h-screen bg-gradient-to-b from-[#E8E8E8] to-[#AAAAAA];
+}
+
+.formWrapper {
+  @apply w-[350px] my-16;
+}
+
+.layout {
+  @apply mx-auto bg-gradient-to-tr from-[#121429] via-[#392C58] to-[#26305B] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md;
+}

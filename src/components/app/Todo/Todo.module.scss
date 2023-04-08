@@ -1,0 +1,27 @@
+.li {
+  @apply flex justify-between bg-white/10 mb-[1px] w-full capitalize mr-1;
+}
+.liComplete {
+  @extend .li;
+  @apply bg-white/5;
+}
+
+.row {
+  @apply w-full flex p-4 cursor-pointer;
+}
+
+.text {
+  @apply ml-4;
+}
+.textComplete {
+  @extend .text;
+  @apply cursor-pointer line-through;
+}
+
+.button {
+  @apply p-4 cursor-pointer flex items-center bg-red-400 hover:brightness-110 transition-all;
+}
+.buttonComplete {
+  @extend .button;
+  @apply bg-red-400/50;
+}
