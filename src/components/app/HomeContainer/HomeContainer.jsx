@@ -11,10 +11,13 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import styles from "./HomeContainer.module.scss";
+import { text } from "../../../assets/lang";
+import { CurrentLanguage } from "../../../context/LangContext";
 
 export default function HomeContainer() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+  const { userLanguage, changeLanguages } = CurrentLanguage();
 
   // Create todo
   const createTodo = async (e) => {
@@ -64,7 +67,7 @@ export default function HomeContainer() {
           onChange={(e) => setInput(e.target.value)}
           className={styles.input}
           type="text"
-          placeholder="Add Todo"
+          placeholder={text.addTodo[userLanguage]}
         />
         <button className={styles.button}>
           <Plus />
@@ -83,7 +86,9 @@ export default function HomeContainer() {
           ))}
       </ul>
       {todos.length < 1 ? null : (
-        <p className={styles.count}>{`You have ${todos.length} todos`}</p>
+        <p className={styles.count}>
+          {text.todosLength[userLanguage]} {todos.length}
+        </p>
       )}
     </div>
   );
