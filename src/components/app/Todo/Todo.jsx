@@ -1,28 +1,33 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styles from "./Todo.module.scss";
 
 export default function Todo({ todo, toggleComplete, deleteTodo }) {
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
   return (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      className={todo.completed ? styles.wrapperComplete : styles.wrapper}
+    <li
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      transition={{ type: "spring", bounce: 0.4, duration: 1 }}
+      className={todo.completed ? styles.liComplete : styles.li}
     >
       <div className={styles.row} onClick={() => toggleComplete(todo)}>
-        <motion.input
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+        <input
+          id="checkbox"
           onChange={() => toggleComplete(todo)}
           type="checkbox"
-          checked={todo.completed ? "checked" : ""}
+          className="hidden"
         />
-        {/* <p className={todo.completed ? styles.textComplete : styles.text}>
-            {todo.text}, {new Date(todo.date).toLocaleDateString()}
-          </p> */}
+        <label htmlFor="checkbox">
+          {todo.completed ? <Check /> : <Uncheck />}
+        </label>
         <p className={todo.completed ? styles.textComplete : styles.text}>
           {todo.text}
+          {/* {new Date(todo.date).toLocaleDateString() */}
         </p>
       </div>
       <button
@@ -31,7 +36,41 @@ export default function Todo({ todo, toggleComplete, deleteTodo }) {
       >
         {<Trash />}
       </button>
-    </motion.div>
+    </li>
+  );
+}
+
+function Check() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+      <path
+        fill="#666"
+        d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10Zm-.997-6 7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16Z"
+      />
+      <defs>
+        <path fill="#fff" d="M0 0h24v24H0z" />
+      </defs>
+    </svg>
+  );
+}
+
+function Uncheck() {
+  return (
+    <svg
+      strokeWidth={2}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+    >
+      <path
+        stroke="#ccc"
+        d="M12 21.5A9.5 9.5 0 0 1 2.5 12 9.5 9.5 0 0 1 12 2.5a9.5 9.5 0 0 1 9.5 9.5 9.5 9.5 0 0 1-9.5 9.5Z"
+      />
+      <defs>
+        <path fill="#fff" d="M0 0h24v24H0z" />
+      </defs>
+    </svg>
   );
 }
 

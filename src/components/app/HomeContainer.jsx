@@ -12,16 +12,15 @@ import {
 } from "firebase/firestore";
 import { text } from "../../assets/lang";
 import { CurrentLanguage } from "../../context/LangContext";
-import { AnimatePresence } from "framer-motion";
-import BottomSheet from "../UI/BottomSheet";
 
 export default function HomeContainer() {
   const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState("");
   const { userLanguage } = CurrentLanguage();
-  const [active, setActive] = useState(false);
 
   // Create todo
-  const createTodo = async (input) => {
+  const createTodo = async (e) => {
+    e.preventDefault(e);
     if (input === "") {
       alert("Please enter a valid todo");
       return;
@@ -31,6 +30,7 @@ export default function HomeContainer() {
       completed: false,
       date: Date(),
     });
+    setInput("");
   };
 
   // Read todo from firebase
@@ -59,8 +59,8 @@ export default function HomeContainer() {
   };
 
   return (
-    <div className="w-full relative">
-      {/* <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
+    <div className="max-w-lg w-full mt-4">
+      <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -71,33 +71,24 @@ export default function HomeContainer() {
         <button className="bg-[#6146C1] p-4 text-white hover:brightness-105 transition-all">
           <Plus />
         </button>
-      </form> */}
+      </form>
 
-      <AnimatePresence>
-        {todos
-          .sort((a, b) => (a.date > b.date) - (a.date < b.date))
-          .reverse()
-          .map((todo) => (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              toggleComplete={toggleComplete}
-              deleteTodo={deleteTodo}
-            />
-          ))}
-      </AnimatePresence>
+      {todos
+        .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+        // .reverse()
+        .map((todo) => (
+          <Todo
+            key={todo.id}
+            todo={todo}
+            toggleComplete={toggleComplete}
+            deleteTodo={deleteTodo}
+          />
+        ))}
       {todos.length < 1 ? null : (
         <p className="text-center pt-4">
           {text.todosLength[userLanguage]} {todos.length}
         </p>
       )}
-
-      <BottomSheet
-        active={active}
-        setActive={setActive}
-        onSubmit={createTodo}
-        placeholder={text.addTodo[userLanguage]}
-      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 .li {
-  @apply flex justify-between bg-white/10 mb-[1px] w-full capitalize mr-1;
+  @apply flex justify-between bg-white/10 mb-[1px] w-full mr-1;
 }
 .liComplete {
   @extend .li;
