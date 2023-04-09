@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 
 export default function BottomSheet({ onSubmit, placeholder }) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   const handlers = useSwipeable({
     onSwipedDown: (eventData) => setActive(false),
@@ -15,7 +15,7 @@ export default function BottomSheet({ onSubmit, placeholder }) {
       {...handlers}
       className={`${
         active && "-translate-y-0 -bottom-0"
-      } translate-y-full fixed max-w-md mx-auto bg-white/60 backdrop-blur-2xl bottom-10 left-0 right-0 rounded-2xl overflow-hidden flex justify-center cursor-pointer transition-all`}
+      } min-h-[50%] translate-y-full fixed max-w-md mx-auto bg-white bottom-10 left-0 right-0 rounded-2xl overflow-hidden flex justify-center cursor-pointer transition-all`}
     >
       <Actions onSubmit={onSubmit} placeholder={placeholder} />
     </div>
