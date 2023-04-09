@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 
-export default function BottomSheet({ onSubmit, placeholder }) {
-  const [active, setActive] = useState(true);
-
+export default function BottomSheet({
+  active,
+  setActive,
+  onSubmit,
+  placeholder,
+}) {
   const handlers = useSwipeable({
     onSwipedDown: (eventData) => setActive(false),
   });
 
   return (
     <div
-      onClick={() => setActive(!active)}
       {...handlers}
+      onClick={() => setActive(!active)}
       className={`${
-        active && "-translate-y-0 -bottom-0"
-      } min-h-[50%] translate-y-full fixed max-w-md mx-auto bg-white bottom-10 left-0 right-0 rounded-2xl overflow-hidden flex justify-center cursor-pointer transition-all`}
+        active ? "translate-y-full" : "-translate-y-0"
+      } min-h-[50%] fixed max-w-md mx-auto bg-white bottom-0 left-0 right-0 rounded-2xl flex justify-center cursor-pointer transition-all z-20`}
     >
       <Actions onSubmit={onSubmit} placeholder={placeholder} />
     </div>
