@@ -21,8 +21,10 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const loginWithGoogle = () => {
-    return signInWithPopup(auth, googleAuthProvider);
+  const loginWithGoogle = async () => {
+    return await signInWithPopup(auth, googleAuthProvider).then(({ user }) => {
+      setUser(user);
+    });
   };
 
   const logout = () => {
@@ -31,7 +33,6 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       setUser(currentUser);
     });
     return () => {

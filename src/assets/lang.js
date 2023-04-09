@@ -9,6 +9,10 @@ export const text = {
     ua: "Задача...",
     en: "Todo...",
   },
+  addFolder: {
+    ua: "Папка...",
+    en: "Folder...",
+  },
   todosLength: {
     ua: "Кількість задач: ",
     en: "Quantity of todos: ",

@@ -38,7 +38,7 @@ export default function Header() {
             className={`fixed inset-0 bg-black/50`}
           />
           <div
-            className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-10`}
+            className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-10 shadow-xl`}
           >
             <div className="flex items-center gap-4">
               {user.photoURL && (

@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import { LangContextProvider } from "./context/LangContext";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/RegisterPage";
+import FolderPage from "./pages/FolderPage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/account" element={<Layout />}>
               <Route index element={<HomePage />} />
+              <Route path="/account/folder/:id" element={<FolderPage />} />
             </Route>
           </Route>
         </Routes>
