@@ -1,9 +1,9 @@
-.wrapper {
-  @apply w-full mr-1 flex justify-between bg-my-beige mb-[2px] text-gray-900 rounded-sm;
+.li {
+  @apply flex justify-between bg-white/10 mb-[1px] w-full capitalize mr-1;
 }
-.wrapperComplete {
-  @extend .wrapper;
-  @apply bg-my-beige/60;
+.liComplete {
+  @extend .li;
+  @apply bg-white/5;
 }
 
 .row {
@@ -15,7 +15,7 @@
 }
 .textComplete {
   @extend .text;
-  @apply cursor-pointer line-through;
+  @apply cursor-pointer text-[#757474];
 }
 
 .button {
