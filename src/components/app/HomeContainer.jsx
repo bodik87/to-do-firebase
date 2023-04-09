@@ -64,9 +64,9 @@ export default function HomeContainer() {
       querySnapshot.forEach((doc) => {
         todosArr.push({ ...doc.data(), id: doc.id });
       });
-      const curUserTodosArr = todosArr.filter(
-        (todo) => todo.owner === user.uid
-      );
+      const curUserTodosArr = todosArr
+        .filter((todo) => todo.owner === user.uid)
+        .filter((todo) => todo.folderId === "Home");
       setTodos(curUserTodosArr);
     });
     return () => unsubscribe();
@@ -101,6 +101,7 @@ export default function HomeContainer() {
       text: input,
       completed: false,
       owner: user.uid,
+      folderId: "Home",
       date: Date(),
     });
     setInput("");

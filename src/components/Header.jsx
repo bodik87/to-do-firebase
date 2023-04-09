@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { text } from "../assets/lang";
 import { CurrentLanguage } from "../context/LangContext";
 import LanguageToogle from "./UI/LanguageToogle";
+import MenuIcon from "./UI/Icons/MenuIcon";
+import BackIcon from "./UI/Icons/BackIcon";
 
 export default function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const home = location.pathname === "/account";
+
   const { user, logout } = UserAuth();
   const [visible, setVisible] = useState(false);
 
@@ -27,9 +32,22 @@ export default function Header() {
   return (
     <div className="flex gap-2 justify-between items-center relative">
       <h1 className="font-bold text-lg">Todo</h1>
-      <button className="py-2 px-4 z-10" onClick={() => setVisible(!visible)}>
-        <Menu />
-      </button>
+      <div className="flex gap-2">
+        {!home && (
+          <Link
+            to={"/account"}
+            className="py-2 px-4 z-10 bg-white/10 hover:bg-white/20 transition-all rounded-sm"
+          >
+            <BackIcon />
+          </Link>
+        )}
+        <button
+          className="py-2 px-4 z-10 bg-white/10 hover:bg-white/20 transition-all rounded-sm"
+          onClick={() => setVisible(!visible)}
+        >
+          <MenuIcon />
+        </button>
+      </div>
 
       {visible && (
         <>
@@ -67,24 +85,5 @@ export default function Header() {
         </>
       )}
     </div>
-  );
-}
-
-function Menu() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-6 h-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M3.75 9h16.5m-16.5 6.75h16.5"
-      />
-    </svg>
   );
 }
