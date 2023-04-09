@@ -17,13 +17,11 @@ import BottomSheet from "../UI/BottomSheet";
 
 export default function HomeContainer() {
   const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState("");
   const { userLanguage } = CurrentLanguage();
   const [active, setActive] = useState(false);
 
   // Create todo
-  const createTodo = async (e) => {
-    e.preventDefault(e);
+  const createTodo = async (input) => {
     if (input === "") {
       alert("Please enter a valid todo");
       return;
@@ -33,7 +31,6 @@ export default function HomeContainer() {
       completed: false,
       date: Date(),
     });
-    setInput("");
   };
 
   // Read todo from firebase
@@ -63,7 +60,7 @@ export default function HomeContainer() {
 
   return (
     <div className="w-full relative">
-      <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
+      {/* <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -74,7 +71,7 @@ export default function HomeContainer() {
         <button className="bg-[#6146C1] p-4 text-white hover:brightness-105 transition-all">
           <Plus />
         </button>
-      </form>
+      </form> */}
 
       <AnimatePresence>
         {todos
@@ -101,12 +98,6 @@ export default function HomeContainer() {
         onSubmit={createTodo}
         placeholder={text.addTodo[userLanguage]}
       />
-      <div
-        onClick={() => setActive(!active)}
-        className="bg-white text-gray-800 text-center p-4 fixed max-w-md mx-auto bottom-0 left-0 right-0 rounded-2xl cursor-pointer z-10"
-      >
-        ADD
-      </div>
     </div>
   );
 }

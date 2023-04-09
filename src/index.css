@@ -25,5 +25,5 @@ body {
 }
 
 .layout {
-  @apply max-w-md mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-b-2xl sm:rounded-2xl;
+  @apply max-w-md mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] sm:rounded-2xl;
 }
