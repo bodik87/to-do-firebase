@@ -1,17 +1,28 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styles from "./Todo.module.scss";
 
 export default function Todo({ todo, toggleComplete, deleteTodo }) {
   return (
-    <li className={todo.completed ? styles.liComplete : styles.li}>
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      className={todo.completed ? styles.wrapperComplete : styles.wrapper}
+    >
       <div className={styles.row} onClick={() => toggleComplete(todo)}>
-        <input
+        <motion.input
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           onChange={() => toggleComplete(todo)}
           type="checkbox"
           checked={todo.completed ? "checked" : ""}
         />
+        {/* <p className={todo.completed ? styles.textComplete : styles.text}>
+            {todo.text}, {new Date(todo.date).toLocaleDateString()}
+          </p> */}
         <p className={todo.completed ? styles.textComplete : styles.text}>
-          {todo.text}, {new Date(todo.date).toLocaleDateString()}
+          {todo.text}
         </p>
       </div>
       <button
@@ -20,7 +31,7 @@ export default function Todo({ todo, toggleComplete, deleteTodo }) {
       >
         {<Trash />}
       </button>
-    </li>
+    </motion.div>
   );
 }
 

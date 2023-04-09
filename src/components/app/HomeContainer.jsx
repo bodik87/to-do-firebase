@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Todo from "../Todo/Todo";
-import { db } from "../../../../firebase";
+import Todo from "./Todo/Todo";
+import { db } from "../../../firebase";
 import {
   query,
   collection,
@@ -10,14 +10,15 @@ import {
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
-import styles from "./HomeContainer.module.scss";
-import { text } from "../../../assets/lang";
-import { CurrentLanguage } from "../../../context/LangContext";
+import { text } from "../../assets/lang";
+import { CurrentLanguage } from "../../context/LangContext";
+import { AnimatePresence } from "framer-motion";
+import BottomSheet from "../UI/BottomSheet";
 
 export default function HomeContainer() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
-  const { userLanguage, changeLanguages } = CurrentLanguage();
+  const { userLanguage } = CurrentLanguage();
 
   // Create todo
   const createTodo = async (e) => {
@@ -60,22 +61,24 @@ export default function HomeContainer() {
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={createTodo} className={styles.form}>
+    <div className="w-full relative">
+      <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className={styles.input}
+          className="bg-white/10 py-4 px-4 w-full outline-none focus:bg-white/20"
           type="text"
           placeholder={text.addTodo[userLanguage]}
         />
-        <button className={styles.button}>
+        <button className="bg-[#6146C1] p-4 text-white hover:brightness-105 transition-all">
           <Plus />
         </button>
       </form>
-      <ul>
+
+      <AnimatePresence>
         {todos
           .sort((a, b) => (a.date > b.date) - (a.date < b.date))
+          .reverse()
           .map((todo) => (
             <Todo
               key={todo.id}
@@ -84,12 +87,17 @@ export default function HomeContainer() {
               deleteTodo={deleteTodo}
             />
           ))}
-      </ul>
+      </AnimatePresence>
       {todos.length < 1 ? null : (
-        <p className={styles.count}>
+        <p className="text-center pt-4">
           {text.todosLength[userLanguage]} {todos.length}
         </p>
       )}
+
+      <BottomSheet
+        onSubmit={createTodo}
+        placeholder={text.addTodo[userLanguage]}
+      />
     </div>
   );
 }

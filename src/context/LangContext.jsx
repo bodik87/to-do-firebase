@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { languages } from "../assets/lang";
+import { createContext, useContext, useState } from "react";
 
+const languages = ["ua", "en"];
 const LangContext = createContext();
 
 export const LangContextProvider = ({ children }) => {

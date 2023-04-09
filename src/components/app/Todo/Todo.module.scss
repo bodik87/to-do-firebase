@@ -1,9 +1,9 @@
-.li {
-  @apply flex justify-between bg-white/10 mb-[1px] w-full capitalize mr-1;
+.wrapper {
+  @apply w-full mr-1 flex justify-between bg-my-beige mb-[2px] text-gray-900 rounded-sm;
 }
-.liComplete {
-  @extend .li;
-  @apply bg-white/5;
+.wrapperComplete {
+  @extend .wrapper;
+  @apply bg-my-beige/60;
 }
 
 .row {
