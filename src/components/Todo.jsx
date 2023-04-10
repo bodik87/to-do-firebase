@@ -6,7 +6,7 @@ import Button from "./UI/Button";
 import { useNavigate } from "react-router-dom";
 import { CurrentLanguage } from "../context/LangContext";
 import { text } from "../assets/lang";
-import ImportantIcon from "./UI/Icons/ImportantIcons";
+import { motion } from "framer-motion";
 
 export default function Todo({ todo, toggleComplete }) {
   const { userLanguage } = CurrentLanguage();
@@ -14,7 +14,11 @@ export default function Todo({ todo, toggleComplete }) {
   const currentButtonColor = todo.completed ? "" : "bg-white/10";
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ type: "spring", bounce: 0.4, duration: 1 }}
       className={`${
         todo.completed
           ? "bg-white/5 hover:bg-white/10"
@@ -50,6 +54,6 @@ export default function Todo({ todo, toggleComplete }) {
       >
         <MenuIcon />
       </Button>
-    </div>
+    </motion.div>
   );
 }

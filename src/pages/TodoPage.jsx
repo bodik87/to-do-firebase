@@ -15,6 +15,7 @@ import { db } from "../../firebase";
 import Button from "../components/UI/Button";
 import Skeleton from "../components/UI/Loader";
 import ImportantIcon from "../components/UI/Icons/ImportantIcons";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function TodoPage() {
   const { user } = UserAuth();
@@ -72,7 +73,7 @@ export default function TodoPage() {
   };
 
   return (
-    <div>
+    <>
       <div className="py-4">
         <input
           value={input}
@@ -86,7 +87,13 @@ export default function TodoPage() {
 
       <div className="relative flex gap-4">
         {availableFolders.length > 0 && (
-          <>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="flex gap-4"
+          >
             <Button
               onClick={() => setVisible(!visible)}
               variant="secondary"
@@ -104,30 +111,41 @@ export default function TodoPage() {
               <ImportantIcon />
               <span className="mx-3">{text.important[userLanguage]}</span>
             </Button>
-          </>
+          </motion.div>
         )}
-        {availableFolders && visible && (
-          <>
-            <div
-              onClick={() => setVisible(false)}
-              className={`fixed inset-0 bg-black/50`}
-            >
-              <div className="min-w-[200px] max-w-lg absolute top-12 left-0 bg-white text-gray-900 rounded-md z-10"></div>
-            </div>
+        <AnimatePresence>
+          {availableFolders && visible && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setVisible(false)}
+                className={`fixed inset-0 bg-black/50`}
+              >
+                <div className="min-w-[200px] max-w-lg absolute top-12 left-0 bg-white text-gray-900 rounded-md z-10"></div>
+              </motion.div>
 
-            <div className="min-w-[200px] max-w-lg absolute top-12 left-0 bg-white text-gray-900 rounded-md z-10">
-              {availableFolders.map((folder, i) => (
-                <div
-                  key={folder + i}
-                  onClick={() => toggleFolderUpdate(state, folder)}
-                  className="p-4 cursor-pointer last:border-none border-b border-gray-300 hover:font-semibold"
-                >
-                  {folder.title}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.2 } }}
+                exit={{ opacity: 0 }}
+                className="min-w-[200px] max-w-lg absolute top-12 left-0 bg-white text-gray-900 rounded-md z-10"
+              >
+                {availableFolders.map((folder, i) => (
+                  <div
+                    key={folder + i}
+                    onClick={() => toggleFolderUpdate(state, folder)}
+                    className="p-4 cursor-pointer last:border-none border-b border-gray-300 hover:font-semibold"
+                  >
+                    {folder.title}
+                  </div>
+                ))}
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="mt-4 flex gap-4">
@@ -139,6 +157,6 @@ export default function TodoPage() {
           {text.saveChanges[userLanguage]}
         </Button>
       </div>
-    </div>
+    </>
   );
 }

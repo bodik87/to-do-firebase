@@ -59,7 +59,13 @@ export default function FoldersPage() {
           {text.folders[userLanguage]}
         </h2>
       )}
-      <div className="mt-1 grid grid-cols-2 gap-2">
+      <div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="mt-1 grid grid-cols-2 gap-2"
+      >
         {folders
           .sort((a, b) => (a.date > b.date) - (a.date < b.date))
           .map((folder) => (

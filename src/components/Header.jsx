@@ -10,6 +10,7 @@ import Button from "./UI/Button";
 import MyLink from "./UI/MyLink";
 import Logo from "./UI/Icons/Logo";
 import BackIcon from "./UI/Icons/BackIcon";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -73,42 +74,55 @@ export default function Header() {
           <MenuIcon />
         </Button>
       </div>
+      <AnimatePresence>
+        {visible && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setVisible(false)}
+              className={`fixed inset-0 bg-black/50`}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-10 shadow-xl`}
+            >
+              <div className="flex items-center gap-4">
+                {user.photoURL && (
+                  <div className="w-8 rounded-full overflow-hidden object-cover">
+                    <img
+                      className="scale-105"
+                      src={user.photoURL}
+                      alt="Avatar"
+                    />
+                  </div>
+                )}
+                <span className="text-sm font-semibold">
+                  {user && user.displayName}
+                </span>
+              </div>
 
-      {visible && (
-        <>
-          <div
-            onClick={() => setVisible(false)}
-            className={`fixed inset-0 bg-black/50`}
-          />
-          <div
-            className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-10 shadow-xl`}
-          >
-            <div className="flex items-center gap-4">
-              {user.photoURL && (
-                <div className="w-8 rounded-full overflow-hidden object-cover">
-                  <img className="scale-105" src={user.photoURL} alt="Avatar" />
-                </div>
-              )}
-              <span className="text-sm font-semibold">
-                {user && user.displayName}
-              </span>
-            </div>
+              <div className="flex justify-end">
+                <LanguageToogle />
+              </div>
 
-            <div className="flex justify-end">
-              <LanguageToogle />
-            </div>
-
-            <div className="text-right mt-2">
-              <button
-                onClick={handleLogout}
-                className="text-right border px-4 py-1 rounded-md"
-              >
-                {text.logout[userLanguage]}
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+              <div className="text-right mt-2">
+                <button
+                  onClick={handleLogout}
+                  className="text-right border px-4 py-1 rounded-md"
+                >
+                  {text.logout[userLanguage]}
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
