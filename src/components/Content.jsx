@@ -89,6 +89,36 @@ export default function Content({ option, onSubmit = () => {} }) {
     fetchFolders();
   }, [user]);
 
+  const createFolder = async (e) => {
+    e.preventDefault(e);
+    if (input === "") {
+      alert("Please enter a valid folder name");
+      return;
+    }
+    await addDoc(collection(db, "folders"), {
+      title: input,
+      owner: user.uid,
+      date: Date(),
+    });
+    setInput("");
+  };
+
+  const createTodo = async (e) => {
+    e.preventDefault(e);
+    if (input === "") {
+      alert("Please enter a valid todo");
+      return;
+    }
+    await addDoc(collection(db, "todos"), {
+      text: input,
+      completed: false,
+      owner: user.uid,
+      folderId: "Home",
+      date: Date(),
+    });
+    setInput("");
+  };
+
   // console.log(option);
 
   return (
@@ -115,7 +145,7 @@ export default function Content({ option, onSubmit = () => {} }) {
 
       <Skeleton loading={loading} text={text.loading[userLanguage]} />
 
-      {option === "folder" ? (
+      {option === "folder" && (
         <div className="mt-1 flex flex-col gap-1">
           {folders
             .sort((a, b) => (a.date < b.date) - (a.date > b.date))
@@ -123,7 +153,9 @@ export default function Content({ option, onSubmit = () => {} }) {
               <Folder key={folder.date} folder={folder} />
             ))}
         </div>
-      ) : (
+      )}
+
+      {option === "todo" && (
         <>
           {todos
             .sort((a, b) => (a.date < b.date) - (a.date > b.date))

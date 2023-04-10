@@ -3,7 +3,6 @@ import MyLink from "./UI/MyLink";
 import FolderIcon from "./UI/Icons/FolderIcon";
 
 export default function Folder({ folder }) {
-  console.log(folder);
   return (
     <MyLink bg="bg-my-yellow" to={`/account/folders/${folder.id}`}>
       <FolderIcon />
