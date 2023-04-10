@@ -10,6 +10,10 @@ export const text = {
     en: "Folders",
   },
   todos: {
+    ua: "Задачі",
+    en: "Todos",
+  },
+  otherTodos: {
     ua: "Інші задачі",
     en: "Other todos",
   },

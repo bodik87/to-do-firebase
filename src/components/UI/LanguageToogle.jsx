@@ -9,10 +9,10 @@ export default function LanguageToogle() {
 
   return (
     <div className="flex gap-6">
-      <span onClick={switchToUA}>
+      <span onClick={switchToUA} className="cursor-pointer">
         <Ukraine />
       </span>
-      <span onClick={switchToUK}>
+      <span onClick={switchToUK} className="cursor-pointer">
         <UnitedKingdom />
       </span>
     </div>

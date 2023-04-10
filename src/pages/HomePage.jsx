@@ -32,9 +32,12 @@ export default function HomePage() {
       querySnapshot.forEach((doc) => {
         todosArr.push({ ...doc.data(), id: doc.id });
       });
-      const curUserTodosArr = todosArr
-        .filter((todo) => todo.owner === user.uid)
-        .filter((todo) => todo.folderId === "Home");
+      const curUserTodosArr = todosArr.filter(
+        (todo) =>
+          todo.owner === user.uid &&
+          todo.folderId === "Home" &&
+          todo.important !== true
+      );
       setTodos(curUserTodosArr);
       const importantTodos = todosArr.filter((todo) => todo.important === true);
       setImportantTodos(importantTodos);
@@ -86,7 +89,13 @@ export default function HomePage() {
             <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
           ))}
 
-      {todos.length > 0 && <h2 className="mt-4">{text.todos[userLanguage]}</h2>}
+      {todos.length > 0 && (
+        <h2 className="mt-4">
+          {importantTodos.length > 0
+            ? text.otherTodos[userLanguage]
+            : text.todos[userLanguage]}
+        </h2>
+      )}
       {todos
         .sort((a, b) => (a.date < b.date) - (a.date > b.date))
         // .reverse()
