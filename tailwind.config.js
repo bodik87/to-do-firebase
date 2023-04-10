@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "my-yellow": "#F7D44C",
+        "my-yellow": "#FBC02D",
         "my-violet": "#6146C1",
         "my-beige": "#F6ECC9",
       },

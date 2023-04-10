@@ -7,3 +7,19 @@
 Додати Пошук
 Додати Скелетон
 Animation As Telegram When Burger Is Opened
+
+
+
+  // /////////////////////////////////////////////
+
+  // const fetchUserData = async () => {
+  //   const userRef = doc(db, "users", user.uid);
+  //   const docSnap = await getDoc(userRef);
+
+  //   if (docSnap.exists()) {
+  //     console.log("Document data:", docSnap.data());
+  //   } else {
+  //     // docSnap.data() will be undefined in this case
+  //     console.log("No such document!");
+  //   }
+  // };

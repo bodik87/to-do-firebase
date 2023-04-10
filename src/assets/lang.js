@@ -17,4 +17,8 @@ export const text = {
     ua: "Кількість задач: ",
     en: "Quantity of todos: ",
   },
+  loading: {
+    ua: "Завантаження...",
+    en: "Loading...",
+  },
 };

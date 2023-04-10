@@ -16,7 +16,7 @@ import { CurrentLanguage } from "../context/LangContext";
 import Plus from "../components/UI/Icons/Plus";
 import FolderIcon from "../components/UI/Icons/FolderIcon";
 import { UserAuth } from "../context/AuthContext";
-import Todo from "../components/app/Todo/Todo";
+import Todo from "../components/Todo";
 
 export default function FolderPage() {
   const { user } = UserAuth();
