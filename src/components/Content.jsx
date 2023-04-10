@@ -15,6 +15,7 @@ import {
 import { db } from "../../firebase";
 import Skeleton from "./UI/Skeleton";
 import Todo from "./Todo";
+import Folder from "./Folder";
 
 export default function Content({ option, onSubmit = () => {} }) {
   const { userLanguage } = CurrentLanguage();
@@ -22,7 +23,7 @@ export default function Content({ option, onSubmit = () => {} }) {
 
   const [todos, setTodos] = useState([]);
   const [folders, setFolders] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [input, setInput] = useState("");
   const getInputPlaceholder = () => {
@@ -88,6 +89,8 @@ export default function Content({ option, onSubmit = () => {} }) {
     fetchFolders();
   }, [user]);
 
+  // console.log(option);
+
   return (
     <>
       <form
@@ -112,17 +115,29 @@ export default function Content({ option, onSubmit = () => {} }) {
 
       <Skeleton loading={loading} text={text.loading[userLanguage]} />
 
-      {todos
-        .sort((a, b) => (a.date < b.date) - (a.date > b.date))
-        // .reverse()
-        .map((todo) => (
-          <Todo
-            key={todo.id}
-            todo={todo}
-            toggleComplete={toggleComplete}
-            deleteTodo={deleteTodo}
-          />
-        ))}
+      {option === "folder" ? (
+        <div className="mt-1 flex flex-col gap-1">
+          {folders
+            .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+            .map((folder) => (
+              <Folder key={folder.date} folder={folder} />
+            ))}
+        </div>
+      ) : (
+        <>
+          {todos
+            .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+            // .reverse()
+            .map((todo) => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                toggleComplete={toggleComplete}
+                deleteTodo={deleteTodo}
+              />
+            ))}
+        </>
+      )}
     </>
   );
 }

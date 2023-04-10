@@ -52,7 +52,6 @@ export default function FolderPage() {
     return () => unsubscribe();
   };
 
-  console.log(todos);
   const createTodo = async (e) => {
     e.preventDefault(e);
     if (input === "") {
@@ -88,11 +87,6 @@ export default function FolderPage() {
 
   return (
     <div>
-      <div className="pt-2 pb-4 flex gap-3 items-center">
-        <FolderIcon />
-        <h1>{folder.title}</h1>
-      </div>
-
       <form onSubmit={createTodo} className="flex justify-between gap-2 mb-4">
         <input
           value={input}

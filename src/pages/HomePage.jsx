@@ -111,17 +111,3 @@ export default function HomePage() {
     // </div>
   );
 }
-
-// function Folder({ folder }) {
-//   return (
-//     <Link
-//       className="w-full mb-1 p-4 bg-my-yellow flex items-center gap-4 group hover:bg-my-yellow/90 transition-all text-gray-800 font-semibold"
-//       to={`/account/folder/${folder.id}`}
-//     >
-//       <FolderIcon />
-//       <span className="group-hover:translate-x-1 transition-all">
-//         {folder.title}
-//       </span>
-//     </Link>
-//   );
-// }

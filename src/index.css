@@ -26,13 +26,13 @@ body {
 }
 
 .layout {
-  @apply max-w-md mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md;
+  @apply max-w-md mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-2xl;
 }
 
 .button {
-  @apply w-fit flex p-4 hover:brightness-125 transition-all;
+  @apply w-auto flex p-4 hover:brightness-110 transition-all rounded-md;
 }
 
 .input {
-  @apply bg-white/10 py-4 px-4 w-full outline-none focus:bg-white/20;
+  @apply bg-white/10 py-4 px-4 w-full outline-none focus:bg-white/20 rounded-md border border-white/20 focus:border-white/40 transition-all;
 }

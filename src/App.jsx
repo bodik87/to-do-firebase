@@ -9,7 +9,6 @@ import { LangContextProvider } from "./context/LangContext";
 import LoginPage from "./pages/Auth/LoginPage";
 import RegisterPage from "./pages/Auth/RegisterPage";
 import FolderPage from "./pages/FolderPage";
-import FoldersPage from "./pages/FoldersPage";
 import TodoPage from "./pages/TodoPage";
 
 export default function App() {
@@ -23,8 +22,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/account" element={<Layout />}>
               <Route index element={<HomePage />} />
-              <Route path="/account/folders" element={<FoldersPage />} />
-              {/* <Route path="/account/folders/:id" element={<FolderPage />} /> */}
+              <Route path="/account/folders/:id" element={<FolderPage />} />
               <Route path="/account/todos/:id" element={<TodoPage />} />
             </Route>
           </Route>

@@ -28,10 +28,11 @@ export default function ActionsRow() {
   const currentPath = getCurrentPath();
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 flex justify-between">
       <MyLink to={currentPath} bg="bg-[#333]" textColor="white">
         {currentLinkIcon}
       </MyLink>
+      <h2>{option}</h2>
     </div>
   );
 }

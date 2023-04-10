@@ -10,8 +10,10 @@ export default function Todo({ todo, toggleComplete }) {
   return (
     <div
       className={`${
-        todo.completed ? "bg-white/5" : "bg-white/10"
-      } mt-1 flex justify-between mb-[1px] w-full`}
+        todo.completed
+          ? "bg-white/5 hover:bg-white/10"
+          : "bg-white/10 hover:bg-white/20"
+      } mt-1 flex justify-between w-full rounded-md `}
     >
       <div
         className="w-full flex p-4 cursor-pointer"
