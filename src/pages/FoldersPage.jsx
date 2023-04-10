@@ -7,6 +7,7 @@ import { UserAuth } from "../context/AuthContext";
 import Folder from "../components/Folder";
 import { text } from "../assets/lang";
 import Skeleton from "../components/UI/Loader";
+import { motion } from "framer-motion";
 
 export default function FoldersPage() {
   const { userLanguage } = CurrentLanguage();
@@ -59,11 +60,11 @@ export default function FoldersPage() {
           {text.folders[userLanguage]}
         </h2>
       )}
-      <div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.6 }}
         className="mt-1 grid grid-cols-2 gap-2"
       >
         {folders
@@ -71,7 +72,7 @@ export default function FoldersPage() {
           .map((folder) => (
             <Folder key={folder.date} folder={folder} />
           ))}
-      </div>
+      </motion.div>
     </>
   );
 }
