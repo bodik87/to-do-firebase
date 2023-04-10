@@ -131,20 +131,11 @@ export default function TodoPage() {
       </div>
 
       <div className="mt-4 flex gap-4">
-        <Button
-          onClick={deleteTodo}
-          textColor="text-black"
-          variant="secondary"
-          bg={"bg-red-400"}
-        >
+        <Button onClick={deleteTodo} textColor="text-black" bg={"bg-red-400"}>
           {text.deleteTodo[userLanguage]}
         </Button>
 
-        <Button
-          onClick={() => toggleTitleUpdate(state)}
-          textColor="text-white"
-          variant="secondary"
-        >
+        <Button onClick={() => toggleTitleUpdate(state)} textColor="text-white">
           {text.saveChanges[userLanguage]}
         </Button>
       </div>

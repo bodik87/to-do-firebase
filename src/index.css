@@ -34,7 +34,7 @@ body {
 }
 
 .secondaryButton {
-  @apply w-fit flex px-4 py-2 hover:brightness-110 transition-all rounded-md;
+  @apply w-fit flex items-center px-4 py-2 hover:brightness-110 transition-all rounded-md;
 }
 
 .input {
