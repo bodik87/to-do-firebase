@@ -19,15 +19,7 @@ export default function Todo({ todo, toggleComplete }) {
         className="w-full flex p-4 cursor-pointer"
         onClick={() => toggleComplete(todo)}
       >
-        <input
-          id="checkbox"
-          onChange={() => toggleComplete(todo)}
-          type="checkbox"
-          className="hidden"
-        />
-        <label htmlFor="checkbox">
-          {todo.completed ? <CheckIcon /> : <UncheckIcon />}
-        </label>
+        {todo.completed ? <CheckIcon /> : <UncheckIcon />}
         <p
           className={`${
             todo.completed && "cursor-pointer text-[#757474]"

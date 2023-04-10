@@ -22,15 +22,6 @@ export const getButtonTextColor = (location) => {
   }
 };
 
-export const getButtonStyle = (variant) => {
-  switch (variant) {
-    case "secondary":
-      return "secondaryButton";
-    default:
-      return "button";
-  }
-};
-
 export default function Button({
   children,
   type = "button",

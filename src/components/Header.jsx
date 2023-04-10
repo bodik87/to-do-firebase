@@ -7,13 +7,15 @@ import LanguageToogle from "./UI/LanguageToogle";
 import MenuIcon from "./UI/Icons/MenuIcon";
 import HomeIcon from "./UI/Icons/HomeIcon";
 import FolderIcon from "./UI/Icons/FolderIcon";
-import Button, { getButtonStyle } from "./UI/Button";
+import Button from "./UI/Button";
 import MyLink from "./UI/MyLink";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const home = location.pathname === "/account";
+  const folder = location.pathname.includes("/account/folders/");
+  const isVisibleFolderIcon = home || folder;
 
   const { user, logout } = UserAuth();
   const [visible, setVisible] = useState(false);
@@ -32,8 +34,6 @@ export default function Header() {
 
   const { userLanguage } = CurrentLanguage();
 
-  const currentStyle = getButtonStyle("secondary");
-
   return (
     <div className="flex gap-2 justify-between items-center relative">
       <h1 className="font-bold text-lg">Todo</h1>
@@ -48,7 +48,7 @@ export default function Header() {
             <HomeIcon />
           </MyLink>
         )}
-        {home && (
+        {isVisibleFolderIcon && (
           <MyLink
             bg="bg-white/10"
             textColor="white"

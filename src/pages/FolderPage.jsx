@@ -1,21 +1,25 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   query,
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { CurrentLanguage } from "../context/LangContext";
 import { UserAuth } from "../context/AuthContext";
 import Todo from "../components/Todo";
 import Form from "../components/Form";
+import Button from "../components/UI/Button";
+import { text } from "../assets/lang";
 
 export default function FolderPage() {
   const { userLanguage } = CurrentLanguage();
+  const navigate = useNavigate();
   const { user } = UserAuth();
   const { id } = useParams();
 
@@ -58,8 +62,18 @@ export default function FolderPage() {
     });
   };
 
+  const deleteFolder = async () => {
+    if (currentTodos.length > 0) {
+      alert(text.canNotDeleteFolder[userLanguage]);
+      return;
+    }
+    await deleteDoc(doc(db, "folders", id));
+    navigate("/account");
+  };
+
   return (
     <>
+      <h2>{"Folder"}</h2>
       <Form userLanguage={userLanguage} onSubmit={createTodo} />
       {currentTodos
         .sort((a, b) => (a.date < b.date) - (a.date > b.date))
@@ -67,6 +81,17 @@ export default function FolderPage() {
         .map((todo) => (
           <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
         ))}
+
+      <div className={`${currentTodos.length > 0 && "opacity-50"} mt-4`}>
+        <Button
+          onClick={deleteFolder}
+          textColor="text-black"
+          variant="secondary"
+          bg={"bg-red-400"}
+        >
+          {text.deleteFolder[userLanguage]}
+        </Button>
+      </div>
     </>
   );
 }

@@ -12,6 +12,7 @@ import {
 import { db } from "../../firebase";
 import { UserAuth } from "../context/AuthContext";
 import Todo from "../components/Todo";
+import { text } from "../assets/lang";
 
 export default function HomePage() {
   const { user } = UserAuth();
@@ -70,6 +71,13 @@ export default function HomePage() {
         .map((todo) => (
           <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
         ))}
+
+      {todos.length > 0 && (
+        <div className="mt-4 w-full text-center text-sm">
+          {text.todosLength[userLanguage]}
+          {todos.length}
+        </div>
+      )}
     </>
   );
 }
