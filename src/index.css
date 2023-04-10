@@ -33,6 +33,10 @@ body {
   @apply w-auto flex p-4 hover:brightness-110 transition-all rounded-md;
 }
 
+.secondaryButton {
+  @apply w-fit flex px-4 py-2 hover:brightness-110 transition-all rounded-md;
+}
+
 .input {
   @apply bg-white/10 py-4 px-4 w-full outline-none focus:bg-white/20 rounded-md border border-white/20 focus:border-white/40 transition-all;
 }

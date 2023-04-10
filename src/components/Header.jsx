@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { text } from "../assets/lang";
 import { CurrentLanguage } from "../context/LangContext";
 import LanguageToogle from "./UI/LanguageToogle";
 import MenuIcon from "./UI/Icons/MenuIcon";
-import BackIcon from "./UI/Icons/BackIcon";
+import HomeIcon from "./UI/Icons/HomeIcon";
+import FolderIcon from "./UI/Icons/FolderIcon";
+import Button, { getButtonStyle } from "./UI/Button";
+import MyLink from "./UI/MyLink";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,24 +32,41 @@ export default function Header() {
 
   const { userLanguage } = CurrentLanguage();
 
+  const currentStyle = getButtonStyle("secondary");
+
   return (
     <div className="flex gap-2 justify-between items-center relative">
       <h1 className="font-bold text-lg">Todo</h1>
       <div className="flex gap-2">
         {!home && (
-          <Link
+          <MyLink
+            bg="bg-white/10"
+            textColor="white"
             to={"/account"}
-            className="py-2 px-4 z-10 bg-white/10 hover:bg-white/20 transition-all rounded-sm"
+            variant="secondary"
           >
-            <BackIcon />
-          </Link>
+            <HomeIcon />
+          </MyLink>
         )}
-        <button
-          className="py-2 px-4 z-10 bg-white/10 hover:bg-white/20 transition-all rounded-sm"
+        {home && (
+          <MyLink
+            bg="bg-white/10"
+            textColor="white"
+            to={"/account/folders"}
+            variant="secondary"
+          >
+            <FolderIcon />
+          </MyLink>
+        )}
+        <Button
+          bg="bg-white/10"
+          textColor="white"
+          className="secondaryButton"
           onClick={() => setVisible(!visible)}
+          variant="secondary"
         >
           <MenuIcon />
-        </button>
+        </Button>
       </div>
 
       {visible && (

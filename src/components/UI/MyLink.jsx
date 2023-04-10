@@ -7,9 +7,16 @@ export default function MyLink({
   onClick = () => {},
   bg = "bg-my-violet",
   textColor = "text-gray-800",
+  variant = "button",
 }) {
   return (
-    <Link to={to} onClick={onClick} className={`${bg} ${textColor} button`}>
+    <Link
+      to={to}
+      onClick={onClick}
+      className={`${bg} ${textColor} ${
+        variant === "secondary" ? "secondaryButton" : "button"
+      }`}
+    >
       {children}
     </Link>
   );

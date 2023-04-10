@@ -6,12 +6,12 @@ export const text = {
     en: "Logout",
   },
   addTodo: {
-    ua: "Задача...",
-    en: "Todo...",
+    ua: "Додати задачу...",
+    en: "Add Todo...",
   },
   addFolder: {
-    ua: "Папка...",
-    en: "Folder...",
+    ua: "Додати папку...",
+    en: "Add folder...",
   },
   todosLength: {
     ua: "Кількість задач: ",
