@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Form from "../components/Form";
-import { useLocation } from "react-router-dom";
 import { CurrentLanguage } from "../context/LangContext";
 import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../firebase";
 import { UserAuth } from "../context/AuthContext";
 import Folder from "../components/Folder";
+import { text } from "../assets/lang";
 
 export default function FoldersPage() {
   const { userLanguage } = CurrentLanguage();
@@ -51,9 +51,14 @@ export default function FoldersPage() {
     <>
       <Form userLanguage={userLanguage} onSubmit={createFolder} />
 
-      <div className="mt-1 flex flex-col gap-1">
+      {folders.length > 0 && (
+        <h2 className="mt-4 pb-1 font-semibold text-lg text-white/60">
+          {text.folders[userLanguage]}
+        </h2>
+      )}
+      <div className="mt-1 grid grid-cols-2 gap-2">
         {folders
-          .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+          .sort((a, b) => (a.date > b.date) - (a.date < b.date))
           .map((folder) => (
             <Folder key={folder.date} folder={folder} />
           ))}

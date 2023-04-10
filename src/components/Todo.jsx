@@ -2,9 +2,11 @@ import React from "react";
 import CheckIcon from "./UI/Icons/CheckIcon";
 import UncheckIcon from "./UI/Icons/UncheckIcon";
 import MenuIcon from "./UI/Icons/MenuIcon";
-import MyLink from "./UI/MyLink";
+import Button from "./UI/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function Todo({ todo, toggleComplete }) {
+  const navigate = useNavigate();
   const currentButtonColor = todo.completed ? "" : "bg-white/10";
 
   return (
@@ -16,26 +18,22 @@ export default function Todo({ todo, toggleComplete }) {
       } mt-1 flex justify-between w-full rounded-md `}
     >
       <div
-        className="w-full flex p-4 cursor-pointer"
+        className="w-full max-w-xs overflow-hidden flex items-center gap-2 py-2 pl-3 cursor-pointer"
         onClick={() => toggleComplete(todo)}
       >
-        {todo.completed ? <CheckIcon /> : <UncheckIcon />}
-        <p
-          className={`${
-            todo.completed && "cursor-pointer text-[#757474]"
-          } ml-4`}
-        >
-          {todo.text}
+        <div>{todo.completed ? <CheckIcon /> : <UncheckIcon />}</div>
+        <p className={`${todo.completed && "cursor-pointer text-[#757474]"}`}>
+          {todo.text.length > 55 ? todo.text.slice(0, 55) + "..." : todo.text}
           {/* {new Date(todo.date).toLocaleDateString() */}
         </p>
       </div>
-      <MyLink
-        to={`/account/todos/${todo.id}`}
+      <Button
+        onClick={() => navigate(`/account/todos/${todo.id}`, { state: todo })}
         textColor="white"
         bg={currentButtonColor}
       >
         <MenuIcon />
-      </MyLink>
+      </Button>
     </div>
   );
 }

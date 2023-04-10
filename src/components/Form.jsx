@@ -14,15 +14,14 @@ export default function Form({ userLanguage, onSubmit }) {
     setInput("");
   };
 
+  const home = location.pathname === "/account";
+  const folder = location.pathname.includes("/account/folders/");
+  const foldersPage = location.pathname === "/account/folders";
+
   const getInputPlaceholder = () => {
-    switch (location.pathname) {
-      case "/account":
-        return text.addTodo[userLanguage];
-      case "/account/folders":
-        return text.addFolder[userLanguage];
-      default:
-        return "";
-    }
+    if (home) return text.addTodo[userLanguage];
+    if (folder) return text.addTodo[userLanguage];
+    if (foldersPage) return text.addFolder[userLanguage];
   };
 
   const currentInputPlaceholder = getInputPlaceholder();

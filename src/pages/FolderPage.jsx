@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { CurrentLanguage } from "../context/LangContext";
 import { UserAuth } from "../context/AuthContext";
@@ -21,7 +21,7 @@ export default function FolderPage() {
   const { userLanguage } = CurrentLanguage();
   const navigate = useNavigate();
   const { user } = UserAuth();
-  const { id } = useParams();
+  const { state } = useLocation();
 
   const [currentTodos, setCurrentTodos] = useState([]);
 
@@ -32,7 +32,9 @@ export default function FolderPage() {
       querySnapshot.forEach((doc) => {
         todosArr.push({ ...doc.data(), id: doc.id });
       });
-      const curFolderTodosArr = todosArr.filter((todo) => todo.folderId === id);
+      const curFolderTodosArr = todosArr.filter(
+        (todo) => todo.folderId === state.id
+      );
       setCurrentTodos(curFolderTodosArr);
     });
     return () => unsubscribe();
@@ -47,7 +49,7 @@ export default function FolderPage() {
       text: text,
       completed: false,
       owner: user.uid,
-      folderId: id,
+      folderId: state.id,
       date: Date(),
     });
   };
@@ -67,13 +69,16 @@ export default function FolderPage() {
       alert(text.canNotDeleteFolder[userLanguage]);
       return;
     }
-    await deleteDoc(doc(db, "folders", id));
+    await deleteDoc(doc(db, "folders", state.id));
     navigate("/account");
   };
 
   return (
     <>
-      <h2>{"Folder"}</h2>
+      <h2 className="mt-4 -mb-2 font-semibold text-xl text-my-yellow">
+        {state.title}
+      </h2>
+
       <Form userLanguage={userLanguage} onSubmit={createTodo} />
       {currentTodos
         .sort((a, b) => (a.date < b.date) - (a.date > b.date))

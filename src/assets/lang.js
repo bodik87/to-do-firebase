@@ -5,6 +5,10 @@ export const text = {
     ua: "Вийти",
     en: "Logout",
   },
+  folders: {
+    ua: "Папки",
+    en: "Folders",
+  },
   addTodo: {
     ua: "Додати задачу...",
     en: "Add Todo...",
@@ -32,5 +36,13 @@ export const text = {
   loading: {
     ua: "Завантаження...",
     en: "Loading...",
+  },
+  moveTo: {
+    ua: "Перемістити в іншу папку",
+    en: "Move to another folder",
+  },
+  saveChanges: {
+    ua: "Зберегти зміни",
+    en: "Save changes",
   },
 };

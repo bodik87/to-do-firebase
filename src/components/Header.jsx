@@ -5,10 +5,11 @@ import { text } from "../assets/lang";
 import { CurrentLanguage } from "../context/LangContext";
 import LanguageToogle from "./UI/LanguageToogle";
 import MenuIcon from "./UI/Icons/MenuIcon";
-import HomeIcon from "./UI/Icons/HomeIcon";
 import FolderIcon from "./UI/Icons/FolderIcon";
 import Button from "./UI/Button";
 import MyLink from "./UI/MyLink";
+import Logo from "./UI/Icons/Logo";
+import BackIcon from "./UI/Icons/BackIcon";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -36,7 +37,11 @@ export default function Header() {
 
   return (
     <div className="flex gap-2 justify-between items-center relative">
-      <h1 className="font-bold text-lg">Todo</h1>
+      <div className="flex items-center gap-3">
+        <Logo />
+        <h1 className="font-bold text-xl">Todo</h1>
+      </div>
+
       <div className="flex gap-2">
         {!home && (
           <MyLink
@@ -45,7 +50,7 @@ export default function Header() {
             to={"/account"}
             variant="secondary"
           >
-            <HomeIcon />
+            <BackIcon />
           </MyLink>
         )}
         {isVisibleFolderIcon && (

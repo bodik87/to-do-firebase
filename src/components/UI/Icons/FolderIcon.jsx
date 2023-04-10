@@ -7,7 +7,7 @@ export default function FolderIcon() {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="#D08F0C"
       className="w-6 h-6 group-hover:translate-x-1 transition-all"
     >
       <path
