@@ -6,6 +6,7 @@ import { db } from "../../firebase";
 import { UserAuth } from "../context/AuthContext";
 import Folder from "../components/Folder";
 import { text } from "../assets/lang";
+import Skeleton from "../components/UI/Loader";
 
 export default function FoldersPage() {
   const { userLanguage } = CurrentLanguage();
@@ -50,6 +51,8 @@ export default function FoldersPage() {
   return (
     <>
       <Form userLanguage={userLanguage} onSubmit={createFolder} />
+
+      {loading && <Skeleton />}
 
       {folders.length > 0 && (
         <h2 className="mt-4 pb-1 font-semibold text-lg text-white/60">

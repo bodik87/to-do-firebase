@@ -13,7 +13,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import Button from "../components/UI/Button";
-import FolderIcon from "../components/UI/Icons/FolderIcon";
+import Skeleton from "../components/UI/Loader";
+import ImportantIcon from "../components/UI/Icons/ImportantIcons";
 
 export default function TodoPage() {
   const { user } = UserAuth();
@@ -24,18 +25,22 @@ export default function TodoPage() {
 
   const [availableFolders, setAvailableFolder] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [important, setImportant] = useState(state?.important || false);
+  const [loading, setLoading] = useState(true);
 
   const fetchFolders = async () => {
+    setLoading(true);
     const q = query(collection(db, "folders"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const foldersArr = [];
       querySnapshot.forEach((doc) => {
         foldersArr.push({ ...doc.data(), id: doc.id });
       });
-      const curUserFodersArr = foldersArr
-        .filter((folder) => folder.owner === user.uid)
-        .filter((folder) => folder.id !== state.folderId);
+      const curUserFodersArr = foldersArr.filter(
+        (folder) => folder.owner === user.uid
+      );
       setAvailableFolder(curUserFodersArr);
+      setLoading(false);
     });
     return () => unsubscribe();
   };
@@ -52,6 +57,7 @@ export default function TodoPage() {
   const toggleTitleUpdate = async (todo) => {
     await updateDoc(doc(db, "todos", todo.id), {
       text: input,
+      important: important,
     });
     navigate(-1);
   };
@@ -75,16 +81,30 @@ export default function TodoPage() {
           type="text"
         />
       </div>
-      <div className="relative">
+
+      {loading && <Skeleton />}
+
+      <div className="relative flex gap-4">
         {availableFolders.length > 0 && (
-          <Button
-            onClick={() => setVisible(!visible)}
-            variant="secondary"
-            textColor="white"
-            bg="bg-[#37383A]"
-          >
-            {text.moveTo[userLanguage]}
-          </Button>
+          <>
+            <Button
+              onClick={() => setVisible(!visible)}
+              variant="secondary"
+              textColor="white"
+              bg="bg-[#37383A]"
+            >
+              {text.moveTo[userLanguage]}
+            </Button>
+            <Button
+              onClick={() => setImportant(!important)}
+              variant="secondary"
+              textColor="white"
+              bg={important ? "bg-[#B28D30]" : "bg-[#37383A]"}
+            >
+              <ImportantIcon />
+              <span className="mx-3">{text.important[userLanguage]}</span>
+            </Button>
+          </>
         )}
         {availableFolders && visible && (
           <>

@@ -13,12 +13,15 @@ import { db } from "../../firebase";
 import { UserAuth } from "../context/AuthContext";
 import Todo from "../components/Todo";
 import { text } from "../assets/lang";
+import Skeleton from "../components/UI/Loader";
+import ImportantIcon from "../components/UI/Icons/ImportantIcons";
 
 export default function HomePage() {
   const { user } = UserAuth();
   const { userLanguage } = CurrentLanguage();
 
   const [todos, setTodos] = useState([]);
+  const [importantTodos, setImportantTodos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchTodos = async () => {
@@ -33,6 +36,8 @@ export default function HomePage() {
         .filter((todo) => todo.owner === user.uid)
         .filter((todo) => todo.folderId === "Home");
       setTodos(curUserTodosArr);
+      const importantTodos = todosArr.filter((todo) => todo.important === true);
+      setImportantTodos(importantTodos);
       setLoading(false);
     });
     return () => unsubscribe();
@@ -65,6 +70,23 @@ export default function HomePage() {
   return (
     <>
       <Form userLanguage={userLanguage} onSubmit={createTodo} />
+
+      {loading && <Skeleton />}
+
+      {importantTodos.length > 0 && (
+        <h2 className="mt-4 font-semibold text-lg text-orange-300 flex items-center gap-2">
+          <ImportantIcon /> {text.important[userLanguage]}
+        </h2>
+      )}
+
+      {importantTodos &&
+        importantTodos
+          .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+          .map((todo) => (
+            <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
+          ))}
+
+      {todos.length > 0 && <h2 className="mt-4">{text.todos[userLanguage]}</h2>}
       {todos
         .sort((a, b) => (a.date < b.date) - (a.date > b.date))
         // .reverse()

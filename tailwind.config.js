@@ -8,6 +8,23 @@ export default {
         "my-violet": "#6146C1",
         "my-beige": "#F6ECC9",
       },
+      animation: {
+        loading: "loading 0.5s linear infinite",
+      },
+      keyframes: {
+        loading: {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+
+          "60%": {
+            transform: "",
+          },
+          "100%": {
+            transform: "translateX(220%)",
+          },
+        },
+      },
     },
   },
   plugins: [],

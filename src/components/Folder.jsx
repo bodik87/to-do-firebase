@@ -11,7 +11,6 @@ export default function Folder({ folder }) {
         navigate(`/account/folders/${folder.id}`, { state: folder })
       }
       bg="bg-my-yellow"
-      to={`/account/folders/${folder.id}`}
     >
       <span className="py-1 text-lg group-hover:translate-x-1 transition-all">
         {folder.title}

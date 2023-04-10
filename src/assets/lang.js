@@ -9,9 +9,21 @@ export const text = {
     ua: "Папки",
     en: "Folders",
   },
+  todos: {
+    ua: "Інші задачі",
+    en: "Other todos",
+  },
   addTodo: {
     ua: "Додати задачу...",
     en: "Add Todo...",
+  },
+  added: {
+    ua: "Додано: ",
+    en: "Added: ",
+  },
+  important: {
+    ua: "Важливі",
+    en: "Important",
   },
   deleteTodo: {
     ua: "Видалити задачу",

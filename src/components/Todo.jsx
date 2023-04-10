@@ -4,8 +4,12 @@ import UncheckIcon from "./UI/Icons/UncheckIcon";
 import MenuIcon from "./UI/Icons/MenuIcon";
 import Button from "./UI/Button";
 import { useNavigate } from "react-router-dom";
+import { CurrentLanguage } from "../context/LangContext";
+import { text } from "../assets/lang";
+import ImportantIcon from "./UI/Icons/ImportantIcons";
 
 export default function Todo({ todo, toggleComplete }) {
+  const { userLanguage } = CurrentLanguage();
   const navigate = useNavigate();
   const currentButtonColor = todo.completed ? "" : "bg-white/10";
 
@@ -18,14 +22,26 @@ export default function Todo({ todo, toggleComplete }) {
       } mt-1 flex justify-between w-full rounded-md `}
     >
       <div
-        className="w-full max-w-xs overflow-hidden flex items-center gap-2 py-2 pl-3 cursor-pointer"
+        className="w-full overflow-hidden flex items-center gap-2 py-2 pl-3 cursor-pointer relative"
         onClick={() => toggleComplete(todo)}
       >
         <div>{todo.completed ? <CheckIcon /> : <UncheckIcon />}</div>
-        <p className={`${todo.completed && "cursor-pointer text-[#757474]"}`}>
-          {todo.text.length > 55 ? todo.text.slice(0, 55) + "..." : todo.text}
-          {/* {new Date(todo.date).toLocaleDateString() */}
-        </p>
+        <div>
+          <div
+            className={`${
+              todo.completed && "cursor-pointer text-[#757474]"
+            } flex gap-1`}
+          >
+            {todo.important && (
+              <span className="text-orange-200 font-semibold">!</span>
+            )}
+            {todo.text.length > 55 ? todo.text.slice(0, 55) + "..." : todo.text}
+          </div>
+          <p className="text-xs mt-1 text-[#757474]">
+            {text.added[userLanguage]}
+            {new Date(todo.date).toLocaleDateString()}
+          </p>
+        </div>
       </div>
       <Button
         onClick={() => navigate(`/account/todos/${todo.id}`, { state: todo })}

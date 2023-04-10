@@ -16,6 +16,7 @@ import Todo from "../components/Todo";
 import Form from "../components/Form";
 import Button from "../components/UI/Button";
 import { text } from "../assets/lang";
+import Skeleton from "../components/UI/Loader";
 
 export default function FolderPage() {
   const { userLanguage } = CurrentLanguage();
@@ -24,8 +25,10 @@ export default function FolderPage() {
   const { state } = useLocation();
 
   const [currentTodos, setCurrentTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchCurrentTodos = async () => {
+    setLoading(true);
     const q = query(collection(db, "todos"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const todosArr = [];
@@ -36,6 +39,7 @@ export default function FolderPage() {
         (todo) => todo.folderId === state.id
       );
       setCurrentTodos(curFolderTodosArr);
+      setLoading(false);
     });
     return () => unsubscribe();
   };
@@ -86,6 +90,8 @@ export default function FolderPage() {
         .map((todo) => (
           <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
         ))}
+
+      {loading && <Skeleton />}
 
       <div className={`${currentTodos.length > 0 && "opacity-50"} mt-4`}>
         <Button
