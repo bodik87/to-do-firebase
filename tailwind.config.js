@@ -9,7 +9,7 @@ export default {
         "my-beige": "#F6ECC9",
       },
       animation: {
-        loading: "loading 0.5s linear infinite",
+        loading: "loading 0.8s linear infinite",
       },
       keyframes: {
         loading: {

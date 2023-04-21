@@ -83,14 +83,14 @@ export default function Header() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setVisible(false)}
-              className={`fixed inset-0 bg-black/50`}
+              className={`fixed inset-0 bg-black/50 z-10`}
             />
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-10 shadow-xl`}
+              className={`absolute top-12 right-0 flex flex-col gap-4 p-4 pl-4 pr-6 bg-white text-gray-800 rounded-lg z-20 shadow-xl`}
             >
               <div className="flex items-center gap-4">
                 {user.photoURL && (

@@ -5,6 +5,7 @@ import { CurrentLanguage } from "../../context/LangContext";
 import LanguageToogle from "../../components/UI/LanguageToogle";
 import { authTexts } from "./auth-lang";
 import Logo from "../../components/UI/Icons/Logo";
+import Skeleton from "../../components/UI/Loader";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,13 +13,16 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       await signIn(email, password);
       navigate("/account");
+      setLoading(false);
     } catch (e) {
       if (e.message === "Firebase: Error (auth/user-not-found).") {
         setError(authTexts.noUser[userLanguage]);
@@ -46,7 +50,7 @@ const LoginPage = () => {
   const { userLanguage } = CurrentLanguage();
 
   return (
-    <div className="absolute top-0 left-0 right-0 mt-16 mx-auto bg-[#221F1E] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md p-10 w-[350px]">
+    <div className="absolute top-0 left-0 right-0 mt-16 mx-auto bg-[#221F1E] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-xl p-10 pb-6 w-[350px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Logo />
@@ -115,6 +119,7 @@ const LoginPage = () => {
             </Link>
           </p>
         </form>
+        {!loading ? <Skeleton /> : <div className="my-4 h-3" />}
       </div>
     </div>
   );

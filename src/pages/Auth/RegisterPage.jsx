@@ -5,6 +5,7 @@ import { CurrentLanguage } from "../../context/LangContext";
 import LanguageToogle from "../../components/UI/LanguageToogle";
 import { authTexts } from "./auth-lang";
 import Logo from "../../components/UI/Icons/Logo";
+import Skeleton from "../../components/UI/Loader";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -12,13 +13,16 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
       await createUser(email, password);
       navigate("/account");
+      setLoading(false);
     } catch (e) {
       if (
         e.message ===
@@ -38,7 +42,7 @@ const RegisterPage = () => {
   const { userLanguage } = CurrentLanguage();
 
   return (
-    <div className="absolute top-0 left-0 right-0 mx-auto bg-[#221F1E] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md p-10 w-[350px] my-16">
+    <div className="absolute top-0 left-0 right-0 mx-auto bg-[#221F1E] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-xl p-10 pb-6 w-[350px] my-16">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Logo />
@@ -82,6 +86,7 @@ const RegisterPage = () => {
           </Link>
         </p>
       </form>
+      {loading ? <Skeleton /> : <div className="my-4 h-3" />}
     </div>
   );
 };
