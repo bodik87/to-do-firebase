@@ -37,7 +37,7 @@ export default function Header() {
   const { userLanguage } = CurrentLanguage();
 
   return (
-    <div className="flex gap-2 justify-between items-center relative">
+    <div className="mt-2 flex gap-2 justify-between items-center relative">
       <div className="flex items-center gap-3">
         <Logo />
         <h1 className="font-bold text-xl">Todo</h1>

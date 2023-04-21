@@ -86,8 +86,6 @@ export default function HomePage() {
     <>
       <Form userLanguage={userLanguage} onSubmit={createTodo} />
 
-      {loading && <Skeleton />}
-
       {importantTodos?.length > 0 && (
         <h2 className="mt-4 font-semibold text-lg text-orange-300 flex items-center gap-2">
           <ImportantIcon /> {text.important[userLanguage]}
@@ -119,7 +117,7 @@ export default function HomePage() {
       </AnimatePresence>
 
       {todos?.length > 0 && (
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between items-center mt-4 mb-1">
           <div className="text-center text-sm">
             {text.todosLength[userLanguage]}
             {todos.length}
@@ -133,6 +131,8 @@ export default function HomePage() {
           </Button>
         </div>
       )}
+
+      {loading ? <Skeleton /> : <div className="h-1" />}
     </>
   );
 }

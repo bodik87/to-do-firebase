@@ -83,8 +83,6 @@ export default function TodoPage() {
         />
       </div>
 
-      {loading && <Skeleton />}
-
       <div className="relative flex gap-4">
         {availableFolders.length > 0 && (
           <motion.div
@@ -102,18 +100,19 @@ export default function TodoPage() {
             >
               {text.moveTo[userLanguage]}
             </Button>
-            <Button
-              onClick={() => setImportant(!important)}
-              variant="secondary"
-              textColor="white"
-              bg={important ? "bg-[#B28D30]" : "bg-[#37383A]"}
-            >
-              <ImportantIcon />
-              <span className="mx-3">{text.important[userLanguage]}</span>
-            </Button>
           </motion.div>
         )}
         <AnimatePresence>
+          <Button
+            onClick={() => setImportant(!important)}
+            variant="secondary"
+            textColor="white"
+            bg={important ? "bg-[#616264]" : "bg-[#37383A]"}
+          >
+            <ImportantIcon />
+            <span className="mx-3">{text.important[userLanguage]}</span>
+          </Button>
+
           {availableFolders && visible && (
             <>
               <motion.div
@@ -148,7 +147,7 @@ export default function TodoPage() {
         </AnimatePresence>
       </div>
 
-      <div className="mt-4 flex gap-4">
+      <div className="mt-4 mb-1 flex gap-4">
         <Button onClick={deleteTodo} textColor="text-black" bg={"bg-red-400"}>
           {text.deleteTodo[userLanguage]}
         </Button>
@@ -157,6 +156,7 @@ export default function TodoPage() {
           {text.saveChanges[userLanguage]}
         </Button>
       </div>
+      {loading ? <Skeleton /> : <div className="h-1" />}
     </>
   );
 }

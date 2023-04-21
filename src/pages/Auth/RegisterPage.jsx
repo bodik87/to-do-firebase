@@ -57,7 +57,7 @@ const RegisterPage = () => {
 
       <p className="mt-2 mb-4 text-sm text-red-400">{error}</p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-1">
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +86,7 @@ const RegisterPage = () => {
           </Link>
         </p>
       </form>
-      {loading ? <Skeleton /> : <div className="my-4 h-3" />}
+      {loading ? <Skeleton /> : <div className="h-3" />}
     </div>
   );
 };

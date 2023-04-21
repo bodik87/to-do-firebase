@@ -2,9 +2,9 @@ import React from "react";
 
 export default function Skeleton() {
   return (
-    <div className="w-full bg-transparent rounded-full h-3 my-4 overflow-x-hidden">
+    <div className="w-full bg-transparent rounded-full h-1 overflow-x-hidden">
       <div
-        className="bg-my-violet h-3 rounded-full animate-loading"
+        className="bg-my-violet h-1 rounded-full animate-loading"
         style={{ width: `50%` }}
       />
     </div>
