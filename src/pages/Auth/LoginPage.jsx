@@ -46,7 +46,7 @@ const LoginPage = () => {
   const { userLanguage } = CurrentLanguage();
 
   return (
-    <div className="absolute top-0 left-0 right-0 mt-16 mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md p-10 w-[350px]">
+    <div className="absolute top-0 left-0 right-0 mt-16 mx-auto bg-[#221F1E] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md p-10 w-[350px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Logo />
@@ -90,7 +90,7 @@ const LoginPage = () => {
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full p-2 bg-white/10"
+            className="block w-full px-3 py-4 rounded-md bg-white/10"
             type="email"
             placeholder={authTexts.emailPlaceholder[userLanguage]}
             required
@@ -98,17 +98,17 @@ const LoginPage = () => {
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full p-2 bg-white/10"
+            className="block w-full px-3 py-4 rounded-md bg-white/10"
             type="password"
             placeholder={authTexts.password[userLanguage]}
             required
           />
 
-          <button className="bg-my-violet w-full p-2 text-white hover:brightness-110 transition-all">
+          <button className="bg-my-violet w-full p-4 rounded-md text-white hover:brightness-110 transition-all">
             {authTexts.login[userLanguage]}
           </button>
 
-          <p className="text-xs text-right">
+          <p className="mt-2 text-xs text-right">
             {authTexts.isUnregistered[userLanguage]}
             <Link to="/register" className="text-my-yellow">
               {authTexts.register[userLanguage]}
