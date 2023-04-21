@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import Form from "../components/Form";
 import { CurrentLanguage } from "../context/LangContext";
 import {
-  addDoc,
-  collection,
+  arrayUnion,
   doc,
+  getDoc,
   onSnapshot,
-  query,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -15,6 +14,9 @@ import Todo from "../components/Todo";
 import { text } from "../assets/lang";
 import Skeleton from "../components/UI/Loader";
 import ImportantIcon from "../components/UI/Icons/ImportantIcons";
+import { nanoid } from "nanoid";
+import Button from "../components/UI/Button";
+import { AnimatePresence } from "framer-motion";
 
 export default function HomePage() {
   const { user } = UserAuth();
@@ -24,51 +26,61 @@ export default function HomePage() {
   const [importantTodos, setImportantTodos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchTodos = async () => {
-    setLoading(true);
-    const q = query(collection(db, "todos"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const todosArr = [];
-      querySnapshot.forEach((doc) => {
-        todosArr.push({ ...doc.data(), id: doc.id });
+  useEffect(() => {
+    const getDocs = () => {
+      setLoading(true);
+      const unsub = onSnapshot(doc(db, "usersDocs", user.uid), (doc) => {
+        const { todos } = doc.data();
+        setTodos(todos);
+        const importantTodos = todos.filter((todo) => todo.important === true);
+        setImportantTodos(importantTodos);
       });
-      const curUserTodosArr = todosArr.filter(
-        (todo) =>
-          todo.owner === user.uid &&
-          todo.folderId === "Home" &&
-          todo.important !== true
-      );
-      setTodos(curUserTodosArr);
-      const importantTodos = todosArr.filter((todo) => todo.important === true);
-      setImportantTodos(importantTodos);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  };
+
+      return () => {
+        unsub();
+      };
+    };
+    user.uid && getDocs();
+    setLoading(false);
+  }, [user.uid]);
 
   const createTodo = async (text) => {
     if (text === "") {
-      alert("Please enter a valid todo");
+      // alert("Please enter a valid todo");
       return;
     }
-    await addDoc(collection(db, "todos"), {
-      text: text,
-      completed: false,
-      owner: user.uid,
-      folderId: "Home",
-      date: Date(),
+    const docRef = doc(db, "usersDocs", user.uid);
+    await updateDoc(docRef, {
+      todos: arrayUnion({
+        id: nanoid(),
+        text: text,
+        completed: false,
+        folderId: "Home",
+        date: Date(),
+      }),
     });
   };
 
   const toggleComplete = async (todo) => {
-    await updateDoc(doc(db, "todos", todo.id), {
-      completed: !todo.completed,
-    });
+    const docRef = doc(db, "usersDocs", user.uid);
+    const docSnap = await getDoc(docRef);
+    const { todos } = docSnap.data();
+    const updatedTodos = todos.map((el) =>
+      el.id === todo.id ? { ...el, completed: !todo.completed } : el
+    );
+    await updateDoc(docRef, { todos: updatedTodos });
   };
 
-  useEffect(() => {
-    fetchTodos();
-  }, [user]);
+  const deleteCompletedTodos = async () => {
+    const docRef = doc(db, "usersDocs", user.uid);
+    const docSnap = await getDoc(docRef);
+    const { todos } = docSnap.data();
+    const uncomletedTodos = todos.filter((el) => !el.completed);
+    // const updatedTodos = todos.map((el) =>
+    //   el.id === todo.id ? { ...el, completed: !todo.completed } : el
+    // );
+    await updateDoc(docRef, { todos: uncomletedTodos });
+  };
 
   return (
     <>
@@ -96,17 +108,29 @@ export default function HomePage() {
             : text.todos[userLanguage]}
         </h2>
       )}
-      {todos
-        .sort((a, b) => (a.date < b.date) - (a.date > b.date))
-        // .reverse()
-        .map((todo) => (
-          <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
-        ))}
+
+      <AnimatePresence>
+        {todos
+          .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+          // .reverse()
+          .map((todo) => (
+            <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
+          ))}
+      </AnimatePresence>
 
       {todos.length > 0 && (
-        <div className="mt-4 w-full text-center text-sm">
-          {text.todosLength[userLanguage]}
-          {todos.length}
+        <div className="flex justify-between items-center mt-4">
+          <div className="text-center text-sm">
+            {text.todosLength[userLanguage]}
+            {todos.length}
+          </div>
+          <Button
+            onClick={deleteCompletedTodos}
+            textColor="text-black"
+            bg={"bg-red-400"}
+          >
+            {text.deleteCompleted[userLanguage]}
+          </Button>
         </div>
       )}
     </>

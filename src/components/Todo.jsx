@@ -18,7 +18,7 @@ export default function Todo({ todo, toggleComplete }) {
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
-      transition={{ type: "spring", bounce: 0.4, duration: 1 }}
+      transition={{ duration: 0.3 }}
       className={`${
         todo.completed
           ? "bg-white/5 hover:bg-white/10"
@@ -47,13 +47,15 @@ export default function Todo({ todo, toggleComplete }) {
           </p>
         </div>
       </div>
-      <Button
-        onClick={() => navigate(`/account/todos/${todo.id}`, { state: todo })}
-        textColor="white"
-        bg={currentButtonColor}
-      >
-        <MenuIcon />
-      </Button>
+      {!todo.completed && (
+        <Button
+          onClick={() => navigate(`/account/todos/${todo.id}`, { state: todo })}
+          textColor="white"
+          bg={currentButtonColor}
+        >
+          <MenuIcon />
+        </Button>
+      )}
     </motion.div>
   );
 }

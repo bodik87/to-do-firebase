@@ -33,6 +33,10 @@ export const text = {
     ua: "Видалити задачу",
     en: "Delete Todo",
   },
+  deleteCompleted: {
+    ua: "Видалити завершені",
+    en: "Delete completed",
+  },
   addFolder: {
     ua: "Додати папку...",
     en: "Add folder...",
