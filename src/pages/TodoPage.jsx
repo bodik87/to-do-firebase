@@ -7,6 +7,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   onSnapshot,
   query,
   updateDoc,
@@ -51,15 +52,26 @@ export default function TodoPage() {
   }, [user]);
 
   const deleteTodo = async () => {
-    await deleteDoc(doc(db, "todos", state.id));
+    setLoading(true);
+    const docRef = doc(db, "usersDocs", user.uid);
+    const docSnap = await getDoc(docRef);
+    const { todos } = docSnap.data();
+    const updatedTodos = todos.filter((todo) => todo.id !== state.id);
+    await updateDoc(docRef, { todos: updatedTodos });
+    setLoading(false);
     navigate(-1);
   };
 
-  const toggleTitleUpdate = async (todo) => {
-    await updateDoc(doc(db, "todos", todo.id), {
-      text: input,
-      important: important,
-    });
+  const toggleUpdate = async (todo) => {
+    setLoading(true);
+    const docRef = doc(db, "usersDocs", user.uid);
+    const docSnap = await getDoc(docRef);
+    const { todos } = docSnap.data();
+    const updatedTodos = todos.map((el) =>
+      el.id === todo.id ? { ...el, important, text: input } : el
+    );
+    await updateDoc(docRef, { todos: updatedTodos });
+    setLoading(false);
     navigate(-1);
   };
 
@@ -107,9 +119,9 @@ export default function TodoPage() {
             onClick={() => setImportant(!important)}
             variant="secondary"
             textColor="white"
-            bg={important ? "bg-[#616264]" : "bg-[#37383A]"}
+            bg={important ? "bg-[#37383A]" : "bg-[#221F1E]"}
           >
-            <ImportantIcon />
+            <ImportantIcon active={important} />
             <span className="mx-3">{text.important[userLanguage]}</span>
           </Button>
 
@@ -152,7 +164,7 @@ export default function TodoPage() {
           {text.deleteTodo[userLanguage]}
         </Button>
 
-        <Button onClick={() => toggleTitleUpdate(state)} textColor="text-white">
+        <Button onClick={() => toggleUpdate(state)} textColor="text-white">
           {text.saveChanges[userLanguage]}
         </Button>
       </div>

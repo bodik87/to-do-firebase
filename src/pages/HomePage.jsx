@@ -31,9 +31,12 @@ export default function HomePage() {
       setLoading(true);
       const unsub = onSnapshot(doc(db, "usersDocs", user.uid), (doc) => {
         const { todos } = doc.data();
-        setTodos(todos);
+
         const importantTodos = todos?.filter((todo) => todo.important === true);
         setImportantTodos(importantTodos);
+
+        const otherTodos = todos?.filter((todo) => todo.important !== true);
+        setTodos(otherTodos);
       });
 
       return () => {
@@ -65,9 +68,11 @@ export default function HomePage() {
     const docRef = doc(db, "usersDocs", user.uid);
     const docSnap = await getDoc(docRef);
     const { todos } = docSnap.data();
+
     const updatedTodos = todos.map((el) =>
       el.id === todo.id ? { ...el, completed: !todo.completed } : el
     );
+
     await updateDoc(docRef, { todos: updatedTodos });
   };
 
@@ -92,22 +97,22 @@ export default function HomePage() {
         </h2>
       )}
 
-      {importantTodos &&
-        importantTodos
-          ?.sort((a, b) => (a.date < b.date) - (a.date > b.date))
-          ?.map((todo) => (
-            <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
-          ))}
-
-      {todos?.length > 0 && (
-        <h2 className="mt-4">
-          {importantTodos?.length > 0
-            ? text.otherTodos[userLanguage]
-            : text.todos[userLanguage]}
-        </h2>
-      )}
-
       <AnimatePresence>
+        {importantTodos &&
+          importantTodos
+            ?.sort((a, b) => (a.date < b.date) - (a.date > b.date))
+            ?.map((todo) => (
+              <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
+            ))}
+
+        {todos?.length > 0 && (
+          <h2 className="mt-4">
+            {importantTodos?.length > 0
+              ? text.otherTodos[userLanguage]
+              : text.todos[userLanguage]}
+          </h2>
+        )}
+
         {todos
           ?.sort((a, b) => (a.date < b.date) - (a.date > b.date))
           // .reverse()

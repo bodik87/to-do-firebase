@@ -54,7 +54,7 @@ export default function Header() {
             <BackIcon />
           </MyLink>
         )}
-        {isVisibleFolderIcon && (
+        {/* {isVisibleFolderIcon && (
           <MyLink
             bg="bg-white/10"
             textColor="white"
@@ -63,7 +63,7 @@ export default function Header() {
           >
             <FolderIcon />
           </MyLink>
-        )}
+        )} */}
         <Button
           bg="bg-white/10"
           textColor="white"
