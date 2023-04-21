@@ -4,13 +4,14 @@ import { UserAuth } from "../../context/AuthContext";
 import { CurrentLanguage } from "../../context/LangContext";
 import LanguageToogle from "../../components/UI/LanguageToogle";
 import { authTexts } from "./auth-lang";
+import Logo from "../../components/UI/Icons/Logo";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn, loginWithGoogle } = UserAuth();
+  const { signIn } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,27 +32,34 @@ const LoginPage = () => {
     }
   };
 
-  const handleLoginWithGoogle = async () => {
-    setError("");
-    try {
-      await loginWithGoogle();
-      navigate("/account");
-    } catch (e) {
-      setError(e.message);
-      console.log(e.message);
-    }
-  };
+  // const handleLoginWithGoogle = async () => {
+  //   setError("");
+  //   try {
+  //     await loginWithGoogle();
+  //     navigate("/account");
+  //   } catch (e) {
+  //     setError(e.message);
+  //     console.log(e.message);
+  //   }
+  // };
 
   const { userLanguage } = CurrentLanguage();
 
   return (
     <div className="absolute top-0 left-0 right-0 mt-16 mx-auto bg-black shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] rounded-md p-10 w-[350px]">
-      <div className="flex justify-between">
-        <h1 className="text-2xl py-2">{authTexts.login[userLanguage]}</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Logo />
+          <h1 className="font-bold text-xl">Todo</h1>
+        </div>
         <LanguageToogle />
       </div>
 
-      <button
+      <h1 className="text-2xl mt-8 text-center">
+        {authTexts.login[userLanguage]}
+      </h1>
+
+      {/* <button
         onClick={handleLoginWithGoogle}
         type="button"
         className="w-full mt-6 inline-flex justify-center text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium text-sm px-5 py-2.5 text-center items-center transition-all rounded-sm"
@@ -68,20 +76,21 @@ const LoginPage = () => {
           ></path>
         </svg>
         {authTexts.withGoogle[userLanguage]}
-      </button>
+      </button> */}
 
       {/* Form */}
-      <div className="mt-8 border-t border-gray-600">
-        <p className="font-semibold mt-5">
+      <div className="mt-4">
+        {/* <div className="mt-8 border-t border-gray-600"> */}
+        {/* <p className="font-semibold mt-5">
           {authTexts.withEmail[userLanguage]}
-        </p>
+        </p> */}
         <p className="mt-2 text-sm text-red-400">{error}</p>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full mt-2 p-2 bg-white/10"
+            className="block w-full p-2 bg-white/10"
             type="email"
             placeholder={authTexts.emailPlaceholder[userLanguage]}
             required
@@ -89,17 +98,17 @@ const LoginPage = () => {
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="block w-full mt-2 p-2 bg-white/10"
+            className="block w-full p-2 bg-white/10"
             type="password"
             placeholder={authTexts.password[userLanguage]}
             required
           />
 
-          <button className="bg-my-violet w-full p-2 mt-3 text-white hover:brightness-110 transition-all">
+          <button className="bg-my-violet w-full p-2 text-white hover:brightness-110 transition-all">
             {authTexts.login[userLanguage]}
           </button>
 
-          <p className="mt-4 text-xs text-right">
+          <p className="text-xs text-right">
             {authTexts.isUnregistered[userLanguage]}
             <Link to="/register" className="text-my-yellow">
               {authTexts.register[userLanguage]}

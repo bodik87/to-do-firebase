@@ -32,7 +32,7 @@ export default function HomePage() {
       const unsub = onSnapshot(doc(db, "usersDocs", user.uid), (doc) => {
         const { todos } = doc.data();
         setTodos(todos);
-        const importantTodos = todos.filter((todo) => todo.important === true);
+        const importantTodos = todos?.filter((todo) => todo.important === true);
         setImportantTodos(importantTodos);
       });
 
@@ -88,7 +88,7 @@ export default function HomePage() {
 
       {loading && <Skeleton />}
 
-      {importantTodos.length > 0 && (
+      {importantTodos?.length > 0 && (
         <h2 className="mt-4 font-semibold text-lg text-orange-300 flex items-center gap-2">
           <ImportantIcon /> {text.important[userLanguage]}
         </h2>
@@ -96,14 +96,14 @@ export default function HomePage() {
 
       {importantTodos &&
         importantTodos
-          .sort((a, b) => (a.date < b.date) - (a.date > b.date))
-          .map((todo) => (
+          ?.sort((a, b) => (a.date < b.date) - (a.date > b.date))
+          ?.map((todo) => (
             <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
           ))}
 
-      {todos.length > 0 && (
+      {todos?.length > 0 && (
         <h2 className="mt-4">
-          {importantTodos.length > 0
+          {importantTodos?.length > 0
             ? text.otherTodos[userLanguage]
             : text.todos[userLanguage]}
         </h2>
@@ -111,14 +111,14 @@ export default function HomePage() {
 
       <AnimatePresence>
         {todos
-          .sort((a, b) => (a.date < b.date) - (a.date > b.date))
+          ?.sort((a, b) => (a.date < b.date) - (a.date > b.date))
           // .reverse()
-          .map((todo) => (
+          ?.map((todo) => (
             <Todo key={todo.id} todo={todo} toggleComplete={toggleComplete} />
           ))}
       </AnimatePresence>
 
-      {todos.length > 0 && (
+      {todos?.length > 0 && (
         <div className="flex justify-between items-center mt-4">
           <div className="text-center text-sm">
             {text.todosLength[userLanguage]}

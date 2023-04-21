@@ -28,13 +28,13 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const loginWithGoogle = async () => {
-    return await signInWithPopup(auth, googleAuthProvider).then(({ user }) => {
-      setUser(user);
-      setDoc(doc(db, "users", user.uid), { uid: user.uid });
-      setDoc(doc(db, "usersDocs", user.uid), {});
-    });
-  };
+  // const loginWithGoogle = async () => {
+  //   return await signInWithPopup(auth, googleAuthProvider).then(({ user }) => {
+  //     setUser(user);
+  //     setDoc(doc(db, "users", user.uid), { uid: user.uid });
+  //     setDoc(doc(db, "usersDocs", user.uid), {});
+  //   });
+  // };
 
   const logout = () => {
     return signOut(auth);
@@ -50,9 +50,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider
-      value={{ createUser, user, logout, signIn, loginWithGoogle }}
-    >
+    <UserContext.Provider value={{ createUser, user, logout, signIn }}>
       {children}
     </UserContext.Provider>
   );
